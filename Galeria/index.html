@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .galeria{
+            display:  flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .galeria img{
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .galeria img:hover{
+            transform: scale(1.1);
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox img{
+            max-width: 80%;
+            max-width: 80%;
+        }
+
+    </style>
+</head>
+<body>
+   <div class="galeria">
+    <img src="gato.jfif" width="150px" onclick="abrirLight('gato.jfif')">
+    <img src="Pitbull.jpg" width="150px" onclick="abrirLight('Pitbull.jpg')">
+    <img src="siames.jfif" width="150px" onclick="abrirLight('siames.jfif')">
+   </div> 
+   <div id="lightbox" class="lightbox" onclick="fecharLightBox()">
+    <img id="lightboxImg" src="">
+   </div>
+   <script>
+    function abrirLight(imagem){
+        const lightbox = document.getElementById('lightbox')
+        const lightboxImg = document.getElementById('lightboxImg')
+        lightbox.style.display = 'flex'
+        lightboxImg.src = imagem
+        
+    }
+    function fecharLightBox (){
+        const lightbox = document.getElementById('lightbox')
+        lightbox.style.display = 'none'
+    }
+    
+   </script>
+</body>
+</html>

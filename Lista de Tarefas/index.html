@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="tarefa" type="text" name="tarefa">
+    <button id="add">Adicionar</button>
+    <ul id="lista-tarefas"></ul>
+    <script>
+        // Seleciona o campo de entrada de texto pelo ID
+        const inputTarefa = document.getElementById("tarefa")
+        const botaoAdicionar = document.getElementById("add")
+        const listaTarefas = document.getElementById("lista-tarefas")
+
+        // Adicione um ouvinte ao botão adicionar
+        // Quando o botão é clicado , a função dentro dele é executada
+        botaoAdicionar.addEventListener("click", function(){
+            // Pega o valor digitado no campo de texto e remove os espaços
+            const tarefa = inputTarefa.value.trim()
+
+            // verifica se o campo não está vazio
+            if(tarefa !== ""){
+                // Cria um elemento LI
+                const listItem = document.createElement("li")
+                listItem.textContent = tarefa
+                listaTarefas.appendChild(listItem)
+                inputTarefa.value = ""
+            }
+        })
+
+        // Adiciona ouvinte para remover
+        listaTarefas.addEventListener("click", function(event){
+            if(event.target.tagName === "LI"){
+                event.target.remove()
+            }
+        })
+    </script>
+    
+</body>
+</html>
