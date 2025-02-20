@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: aliceblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .carta-conteiner {
+            perspective: 1000px;
+        }
+
+        .carta {
+            width: 200px;
+            height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+        }
+
+        .carta.virada {
+            transform: rotateY(180deg);
+        }
+
+
+        .carta .frente,
+        .carta .verso {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgb(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .carta .frente {
+            background-color: #6b5b95;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .carta .verso {
+            background-color: #fff;
+            color: #333;
+            font-size: 18px;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="carta-conteiner">
+        <div class="carta" id="carta" onclick="girarCarta()">
+            <div class="frente">
+                LAZARO
+            </div>
+            <div class="verso" id="verso">
+                Clique para girar a carta
+            </div>
+        </div>
+    </div>
+
+    <script src="motor.js"></script>
+
+
+</body>
+
+</html>
