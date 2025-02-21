@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            padding: 50px;
+
+        }
+        .carta-conteiner {
+            perspective: 1000px;
+        }
+
+        .carta {
+            width: 100px;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            cursor: pointer;
+        }
+
+        .carta.virada {
+            transform: rotateY(180deg);
+        }
+
+        #carta{
+            position: relative;
+            left: 40%;
+        }
+
+
+        .carta .frente,
+        .carta .verso {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgb(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .carta .frente {
+            background-color: #6b5b95;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        h1{
+            font-size: 8;
+        }
+
+        .carta .verso {
+            background-color: #fff;
+            color: #333;
+            font-size: 15px;
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pokédex com cartas que Viram</h1>
+
+    <input type="text" id="pokemonInput" placeholder="Digite o nome ou ID do Pokemon">
+    <button onclick="obterInfoPokemon()">Pesquisar</button>
+    <div class="carta-conteiner">
+        <div class="carta" id="carta" onclick="girarCarta()">
+            <div class="frente">
+                Pokémon
+            </div>
+            <div class="verso" id="verso">
+                Clique para girar a carta
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        function obterInfoPokemon() {
+            const inputPokemon = document.getElementById('pokemonInput')
+            const nomeOuIdPokemon = inputPokemon.value.toLowerCase()
+
+            if (!nomeOuIdPokemon) {
+                alert("Qual Pokemon você quer buscar ?")
+                return
+            }
+            fetch(`https://pokeapi.co/api/v2/pokemon/${nomeOuIdPokemon}`)
+                .then(resposta => {
+                    if (!resposta.ok) {
+                        throw new console.error(resposta.status);
+                    }
+                    return resposta.json()
+                })
+                .then(pokemon => {
+                    const habilidadesHtml = pokemon.moves.map(item => `<span class="habilidade-badge">${item.move.name}</span>`).join('')
+                    const divInfoPokemon = document.getElementById('pokemon_info')
+                    divInfoPokemon.innerHTML = `
+            <img src="${pokemon.sprites.front_default}">
+            <h2>Nome: ${pokemon.name}</h2>
+            <h3>N° ${pokemon.id}</h3>
+            <h3>Tipo ${pokemon.types.map(item => '' + item.type.name).toString()}</h3>
+            <div class="habilidades-conteiner">
+            <h3>Hablidades:</h3>
+            ${habilidadesHtml}
+            </div>
+            <h3>Peso: ${pokemon.weight / 10}KG</h3>
+            <h3>Altura: ${pokemon.height / 10}m</h3>`
+                })
+                .catch(erro => {
+                    console.error(erro)
+                })
+
+        } 
+
+        
+    </script>
+
+
+</body>
+
+</html>
